@@ -1,0 +1,142 @@
+### 1. Actuator Health Check
+GET http://localhost:8081/actuator/health
+Accept: application/json
+
+### 2. User Signup
+POST http://localhost:8081/api/auth/signup
+Content-Type: application/json
+
+{
+  "name": "Sowmya Tech",
+  "email": "candidate@beamacademy.com",
+  "password": "Password123!"
+}
+
+### 3. User Login (Copy the returned token to use in Authorization header)
+# @name login
+POST http://localhost:8081/api/auth/login
+Content-Type: application/json
+
+{
+  "email": "candidate@beamacademy.com",
+  "password": "Password123!"
+}
+
+### Store token from login response
+@authToken = {{login.response.body.token}}
+
+### 4. Get Current User Profile
+GET http://localhost:8081/api/auth/me
+Authorization: Bearer {{authToken}}
+
+### 5. Get Dashboard Stats
+GET http://localhost:8081/api/dashboard/stats
+Authorization: Bearer {{authToken}}
+
+### 6. Toggle Course Topic Completion (Java / SQL)
+POST http://localhost:8081/api/courses/toggle
+Authorization: Bearer {{authToken}}
+Content-Type: application/json
+
+{
+  "course": "java",
+  "topicId": "java-streams",
+  "completed": true
+}
+
+### 7. Get User Course Progress
+GET http://localhost:8081/api/courses/progress
+Authorization: Bearer {{authToken}}
+
+### 8. Submit DSA Problem Attempt
+POST http://localhost:8081/api/dsa/attempts
+Authorization: Bearer {{authToken}}
+Content-Type: application/json
+
+{
+  "patternId": "two-pointers",
+  "problemTitle": "Two Sum II - Input Array Is Sorted",
+  "status": "COMPLETED",
+  "hintsUsed": 1,
+  "notes": "Used two pointer approach starting from left and right boundaries with O(N) time and O(1) space."
+}
+
+### 9. Get DSA Attempts History
+GET http://localhost:8081/api/dsa/attempts
+Authorization: Bearer {{authToken}}
+
+### 10. Submit Aptitude Quiz Attempt
+POST http://localhost:8081/api/aptitude/attempts
+Authorization: Bearer {{authToken}}
+Content-Type: application/json
+
+{
+  "category": "Quantitative",
+  "totalQuestions": 5,
+  "score": 4,
+  "timeSpentSeconds": 180
+}
+
+### 11. Get Aptitude Attempts History
+GET http://localhost:8081/api/aptitude/attempts
+Authorization: Bearer {{authToken}}
+
+### 12. Save Interview Practice / Self-Assessment
+POST http://localhost:8081/api/interview/practices
+Authorization: Bearer {{authToken}}
+Content-Type: application/json
+
+{
+  "category": "Java Core",
+  "questionTitle": "Why is String immutable in Java and what are its memory implications?",
+  "status": "CONFIDENT",
+  "userNotes": "String pool caching, security in classloading & networking, thread safety by default."
+}
+
+### 13. Get Interview Practices History
+GET http://localhost:8081/api/interview/practices
+Authorization: Bearer {{authToken}}
+
+### 14. Get Unified Progress & Readiness Metrics
+GET http://localhost:8081/api/progress
+Authorization: Bearer {{authToken}}
+
+### 15. Get or Create Personalized Study Plan
+GET http://localhost:8081/api/study-plan
+Authorization: Bearer {{authToken}}
+
+### 16. Update Study Plan
+POST http://localhost:8081/api/study-plan
+Authorization: Bearer {{authToken}}
+Content-Type: application/json
+
+{
+  "targetWeeks": 6,
+  "currentDay": 12,
+  "focusArea": "DSA & Spring Boot Backend Microservices"
+}
+
+### 17. Get Resume Profile
+GET http://localhost:8081/api/resume
+Authorization: Bearer {{authToken}}
+
+### 18. Save Resume Profile
+POST http://localhost:8081/api/resume
+Authorization: Bearer {{authToken}}
+Content-Type: application/json
+
+{
+  "targetRole": "Java Backend Developer",
+  "skills": "Java 17, Spring Boot, MySQL, REST APIs, Hibernate/JPA, Microservices, Git",
+  "summary": "Junior Software Engineer with strong foundation in Java, Spring Boot RESTful microservices, and database optimization."
+}
+
+### 19. Ask AI Placement Coach (Supports live OpenAI or deterministic fallback)
+POST http://localhost:8081/api/ai/coach
+Authorization: Bearer {{authToken}}
+Content-Type: application/json
+
+{
+  "question": "What are the key differences between HashMap and ConcurrentHashMap?",
+  "context": "Java Collections Interview Preparation"
+}

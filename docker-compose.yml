@@ -1,0 +1,20 @@
+services:
+  mysql:
+    image: mysql:8.4
+    container_name: beam-mysql
+    restart: unless-stopped
+    environment:
+      MYSQL_DATABASE: beam_academy
+      MYSQL_ROOT_PASSWORD: beam_dev_root
+    ports:
+      - "3306:3306"
+    volumes:
+      - beam_mysql_data:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-pbeam_dev_root"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+
+volumes:
+  beam_mysql_data:

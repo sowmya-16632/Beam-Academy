@@ -1,0 +1,10 @@
+{
+  "name": "Beam Academy",
+  "image": "mcr.microsoft.com/devcontainers/base:ubuntu",
+  "features": {
+    "ghcr.io/devcontainers/features/java:1": {"version": "21"},
+    "ghcr.io/devcontainers/features/node:1": {"version": "22"}
+  },
+  "forwardPorts": [5173, 8081, 3306],
+  "postCreateCommand": "cd frontend && npm ci && cd ../backend-app && chmod +x mvnw && ./mvnw -q -DskipTests compile"
+}
